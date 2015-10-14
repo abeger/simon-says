@@ -1,25 +1,28 @@
-class SimonSays
-  attr_reader :buffer
+module SimonSays
 
   LEFTMOST = 0
 
-  def initialize(start_val)
-    set_buffer(start_val)
+  # Switch letters at pos1 and pos2
+  def self.switch(str, pos1, pos2) 
+    a = str[pos1]
+    str[pos1] = str[pos2]
+    str[pos2] = a
+    str
   end
 
-  def text
-    buffer
+  # Remove letter at pos
+  def self.delete(str, pos) 
+    #TODO: Handle position outside range?
+    s = str.slice(0,pos)
+    if pos < (str.size - 1)
+      s = s.concat(str.slice(pos+1))
+    end
+    s
   end
 
-  def switch(pos1, pos2) 
-    a = buffer[pos1]
-    buffer[pos1] = buffer[pos2]
-    buffer[pos2] = a
+  # Return the index of the rightmost character
+  def self.rightmost_pos(str)
+    str.size - 1
   end
   
-  private
-
-  def set_buffer(str)
-    @buffer = str.gsub(/\s/, '')
-  end
 end
