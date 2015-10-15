@@ -35,6 +35,6 @@ describe SimonSays do
   it "does the puzzle" do
     s = SimonSays::switch("THEPERFUMEFACTORY", SimonSays::LEFTMOST, -9)
     s = SimonSays::delete(s, SimonSays::rightmost_pos(s))
-    SimonSays::insert(s, 9, 'O')
+    s = SimonSays::insert(s, 9, 'O')
   end
 end
