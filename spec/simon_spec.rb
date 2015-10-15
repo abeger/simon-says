@@ -14,10 +14,9 @@ describe SimonSays do
   end
 
   it 'deletes a letter based on zero-based position' do
+    expect(SimonSays::delete('ABCD', 0)).to eq 'BCD'
+    expect(SimonSays::delete('ABCD', 1)).to eq 'ACD'
     expect(SimonSays::delete('ABCD', 2)).to eq 'ABD'
-  end
-
-  it 'deletes the rightmost letter without issue' do
     expect(SimonSays::delete('ABCD', 3)).to eq 'ABC'
   end
 
@@ -25,8 +24,17 @@ describe SimonSays do
     expect(SimonSays::rightmost_pos('ABCD')).to eq 3
   end
   
+  it 'inserts a letter at the specified position' do
+    expect(SimonSays::insert('ABCD', 0, 'X')).to eq 'XABCD'
+    expect(SimonSays::insert('ABCD', 1, 'X')).to eq 'AXBCD'
+    expect(SimonSays::insert('ABCD', 2, 'X')).to eq 'ABXCD'
+    expect(SimonSays::insert('ABCD', 3, 'X')).to eq 'ABCXD'
+    expect(SimonSays::insert('ABCD', 4, 'X')).to eq 'ABCDX'
+  end
+
   it "does the puzzle" do
     s = SimonSays::switch("THEPERFUMEFACTORY", SimonSays::LEFTMOST, -9)
-    SimonSays::delete(s, SimonSays::rightmost_pos(s))
+    s = SimonSays::delete(s, SimonSays::rightmost_pos(s))
+    SimonSays::insert(s, 9, 'O')
   end
 end
