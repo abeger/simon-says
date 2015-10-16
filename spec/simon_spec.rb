@@ -68,11 +68,27 @@ describe SimonSays do
     expect(SimonSays::find_pos('DDDDD', 'D', -5)).to eq 0
   end
 
+  it 'changes a letter at a specified position' do
+    expect(SimonSays::change('ABCD', 1, 'X')).to eq 'AXCD'
+    expect(SimonSays::change('ABCD', 3, 'Y')).to eq 'ABCY'
+    expect(SimonSays::change('ABCD', 0, 'G')).to eq 'GBCD'
+    expect(SimonSays::change('ABCD', 2, 'A')).to eq 'ABAD'
+  end
+  
+  it 'increments a letter to the next letter in the alphabet at a specified position' do
+    expect(SimonSays::increment('ABCD', 0)).to eq 'BBCD'
+    expect(SimonSays::increment('ABCD', 1)).to eq 'ACCD'
+    expect(SimonSays::increment('ABCD', 2)).to eq 'ABDD'
+    expect(SimonSays::increment('ABCD', 3)).to eq 'ABCE'
+  end
+
   it "does the puzzle" do
     s = SimonSays::switch("THEPERFUMEFACTORY", SimonSays::LEFTMOST, -9)
     s = SimonSays::delete(s, SimonSays::rightmost_pos(s))
     s = SimonSays::insert(s, 8, 'O')
     s = SimonSays::move(s, SimonSays::find_pos(s, 'A'), 1)
     s = SimonSays::delete(s, SimonSays::find_pos(s, 'E', -2))
+    s = SimonSays::increment(s, SimonSays::rightmost_pos(s))
+    puts "\n" + s
   end
 end

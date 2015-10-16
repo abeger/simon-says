@@ -67,4 +67,16 @@ module SimonSays
     s = self.insert(s, pos2, letter)
   end
   
+  def self.change(str, pos, letter)
+    #TODO: out of bounds check?
+    str[pos] = letter
+    str
+  end
+
+  def self.increment(str, pos)
+    #TODO: out of bounds check?
+    str[pos] = str[pos].next
+    str
+  end
+  
 end
