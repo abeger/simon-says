@@ -43,9 +43,20 @@ module SimonSays
   end
 
   # Find first occurance of a letter
-  def self.find_pos(str, letter)
-    #TODO: Handle nil?
-    str.index(letter)
+  def self.find_pos(str, letter, n=1)
+    #TODO: Handle nil string?
+    if n >= 0
+      pos = -1
+      for i in 1..n do
+        pos = str.index(letter, pos+1)
+      end
+    else
+      pos = str.size
+      for i in 1..-n do
+        pos = str.rindex(letter, pos-1)
+      end
+    end
+    pos
   end
 
   # Move letter at pos1 to pos2

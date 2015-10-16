@@ -45,11 +45,34 @@ describe SimonSays do
     expect(SimonSays::move('ABCD', 0, 1)).to eq 'BACD'
     expect(SimonSays::move('ABCD', 2, 3)).to eq 'ABDC'
   end
+  
+  it 'finds the nth position of a letter from the left' do
+    expect(SimonSays::find_pos('ABCAD', 'A', 2)).to eq 3
+    expect(SimonSays::find_pos('ABCAD', 'A', 1)).to eq 0
+    expect(SimonSays::find_pos('ABCAD', 'C', 1)).to eq 2
+    expect(SimonSays::find_pos('DDDDD', 'D', 1)).to eq 0
+    expect(SimonSays::find_pos('DDDDD', 'D', 2)).to eq 1
+    expect(SimonSays::find_pos('DDDDD', 'D', 3)).to eq 2
+    expect(SimonSays::find_pos('DDDDD', 'D', 4)).to eq 3
+    expect(SimonSays::find_pos('DDDDD', 'D', 5)).to eq 4
+  end
+
+  it 'finds the nth position of a letter from the right' do
+    expect(SimonSays::find_pos('ABCAD', 'A', -2)).to eq 0
+    expect(SimonSays::find_pos('ABCAD', 'A', -1)).to eq 3
+    expect(SimonSays::find_pos('ABCAD', 'C', -1)).to eq 2
+    expect(SimonSays::find_pos('DDDDD', 'D', -1)).to eq 4
+    expect(SimonSays::find_pos('DDDDD', 'D', -2)).to eq 3
+    expect(SimonSays::find_pos('DDDDD', 'D', -3)).to eq 2
+    expect(SimonSays::find_pos('DDDDD', 'D', -4)).to eq 1
+    expect(SimonSays::find_pos('DDDDD', 'D', -5)).to eq 0
+  end
 
   it "does the puzzle" do
     s = SimonSays::switch("THEPERFUMEFACTORY", SimonSays::LEFTMOST, -9)
     s = SimonSays::delete(s, SimonSays::rightmost_pos(s))
-    s = SimonSays::insert(s, 9, 'O')
+    s = SimonSays::insert(s, 8, 'O')
     s = SimonSays::move(s, SimonSays::find_pos(s, 'A'), 1)
+    s = SimonSays::delete(s, SimonSays::find_pos(s, 'E', -2))
   end
 end
