@@ -25,6 +25,7 @@ module SimonSays
 
   # Return the index of the rightmost character
   def self.rightmost_pos(str)
+    #TODO: empty check?
     str.size - 1
   end
 
@@ -39,6 +40,20 @@ module SimonSays
       s = s.concat(str.slice(pos..str.size-1))
     end
     s
+  end
+
+  # Find first occurance of a letter
+  def self.find_pos(str, letter)
+    #TODO: Handle nil?
+    str.index(letter)
+  end
+
+  # Move letter at pos1 to pos2
+  def self.move(str, pos1, pos2)
+    #TODO: out of bounds check?
+    letter = str[pos1]
+    s = self.delete(str, pos1)
+    s = self.insert(s, pos2, letter)
   end
   
 end

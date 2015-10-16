@@ -32,9 +32,24 @@ describe SimonSays do
     expect(SimonSays::insert('ABCD', 4, 'X')).to eq 'ABCDX'
   end
 
+  it 'finds the first position of a letter' do
+    expect(SimonSays::find_pos('ABCD', 'A')).to eq 0
+    expect(SimonSays::find_pos('ABCD', 'B')).to eq 1
+    expect(SimonSays::find_pos('ABCD', 'C')).to eq 2
+    expect(SimonSays::find_pos('ABCD', 'D')).to eq 3
+  end
+
+  it 'moves a letter from one position to another' do
+    expect(SimonSays::move('ABCD', 1, 0)).to eq 'BACD'
+    expect(SimonSays::move('ABCD', 3, 1)).to eq 'ADBC'
+    expect(SimonSays::move('ABCD', 0, 1)).to eq 'BACD'
+    expect(SimonSays::move('ABCD', 2, 3)).to eq 'ABDC'
+  end
+
   it "does the puzzle" do
     s = SimonSays::switch("THEPERFUMEFACTORY", SimonSays::LEFTMOST, -9)
     s = SimonSays::delete(s, SimonSays::rightmost_pos(s))
     s = SimonSays::insert(s, 9, 'O')
+    s = SimonSays::move(s, SimonSays::find_pos(s, 'A'), 1)
   end
 end
