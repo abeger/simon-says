@@ -14,7 +14,6 @@ module SimonSays
 
   # like String::partition, but by index
   def self.index_partition(str, index)
-    #TODO: Needs to handle negative numbers?
     if index >= 0
       a = str[0, index] || ''
       b = str[index] || ''
@@ -76,7 +75,13 @@ module SimonSays
 
   # Move letter at pos1 to pos2
   def self.move(str, pos1, pos2)
-    #TODO: out of bounds check?
+    #TODO: Move has a problem in that it doesn't move relative to the original word
+    # Basically, if I say "Move the B in ABCD to the right of the C", I would expect to 
+    # move to the position of C plus 1. BUT, because of the delete, what I actually 
+    # want is to move it to the current position of C: once the B is deleted, C moves up a 
+    # spot, so the position of C to the right is actually the original position of C.
+    # I can either intuit this in the calling method (current implementation) or figure out
+    # how to disambiguate this method
     letter = str[pos1]
     s = self.delete(str, pos1)
     s = self.insert(s, pos2, letter)
