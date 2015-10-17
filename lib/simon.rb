@@ -1,6 +1,8 @@
 module SimonSays
 
   LEFTMOST = 0
+  VOWEL = 1
+  CONS = 4
 
   # Switch letters at pos1 and pos2
   def self.switch(str, pos1, pos2) 
@@ -38,17 +40,28 @@ module SimonSays
   end
 
   # Find first occurance of a letter
-  def self.find_pos(str, letter, n=1)
+  def self.find_pos(str, args={})
+    instance = args[:instance] || 1
+    search_arg = args[:search] || nil
+    case search_arg
+    when VOWEL
+      search = /[AEIOU]/
+    when CONS
+      search = /[^AEIOU]/
+    else
+      search = search_arg
+    end
+      
     #TODO: Handle nil string?
-    if n >= 0
+    if instance >= 0
       pos = -1
-      for i in 1..n do
-        pos = str.index(letter, pos+1)
+      for i in 1..instance do
+        pos = str.index(search, pos+1)
       end
     else
       pos = str.size
-      for i in 1..-n do
-        pos = str.rindex(letter, pos-1)
+      for i in 1..-instance do
+        pos = str.rindex(search, pos-1)
       end
     end
     pos

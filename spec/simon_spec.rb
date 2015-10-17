@@ -33,10 +33,10 @@ describe SimonSays do
   end
 
   it 'finds the first position of a letter' do
-    expect(SimonSays::find_pos('ABCD', 'A')).to eq 0
-    expect(SimonSays::find_pos('ABCD', 'B')).to eq 1
-    expect(SimonSays::find_pos('ABCD', 'C')).to eq 2
-    expect(SimonSays::find_pos('ABCD', 'D')).to eq 3
+    expect(SimonSays::find_pos('ABCD', search: 'A')).to eq 0
+    expect(SimonSays::find_pos('ABCD', search: 'B')).to eq 1
+    expect(SimonSays::find_pos('ABCD', search: 'C')).to eq 2
+    expect(SimonSays::find_pos('ABCD', search: 'D')).to eq 3
   end
 
   it 'moves a letter from one position to another' do
@@ -47,25 +47,43 @@ describe SimonSays do
   end
   
   it 'finds the nth position of a letter from the left' do
-    expect(SimonSays::find_pos('ABCAD', 'A', 2)).to eq 3
-    expect(SimonSays::find_pos('ABCAD', 'A', 1)).to eq 0
-    expect(SimonSays::find_pos('ABCAD', 'C', 1)).to eq 2
-    expect(SimonSays::find_pos('DDDDD', 'D', 1)).to eq 0
-    expect(SimonSays::find_pos('DDDDD', 'D', 2)).to eq 1
-    expect(SimonSays::find_pos('DDDDD', 'D', 3)).to eq 2
-    expect(SimonSays::find_pos('DDDDD', 'D', 4)).to eq 3
-    expect(SimonSays::find_pos('DDDDD', 'D', 5)).to eq 4
+    expect(SimonSays::find_pos('ABCAD', search: 'A', instance: 2)).to eq 3
+    expect(SimonSays::find_pos('ABCAD', search: 'A', instance: 1)).to eq 0
+    expect(SimonSays::find_pos('ABCAD', search: 'C', instance: 1)).to eq 2
+    expect(SimonSays::find_pos('DDDDD', search: 'D', instance: 1)).to eq 0
+    expect(SimonSays::find_pos('DDDDD', search: 'D', instance: 2)).to eq 1
+    expect(SimonSays::find_pos('DDDDD', search: 'D', instance: 3)).to eq 2
+    expect(SimonSays::find_pos('DDDDD', search: 'D', instance: 4)).to eq 3
+    expect(SimonSays::find_pos('DDDDD', search: 'D', instance: 5)).to eq 4
   end
 
   it 'finds the nth position of a letter from the right' do
-    expect(SimonSays::find_pos('ABCAD', 'A', -2)).to eq 0
-    expect(SimonSays::find_pos('ABCAD', 'A', -1)).to eq 3
-    expect(SimonSays::find_pos('ABCAD', 'C', -1)).to eq 2
-    expect(SimonSays::find_pos('DDDDD', 'D', -1)).to eq 4
-    expect(SimonSays::find_pos('DDDDD', 'D', -2)).to eq 3
-    expect(SimonSays::find_pos('DDDDD', 'D', -3)).to eq 2
-    expect(SimonSays::find_pos('DDDDD', 'D', -4)).to eq 1
-    expect(SimonSays::find_pos('DDDDD', 'D', -5)).to eq 0
+    expect(SimonSays::find_pos('ABCAD', search: 'A', instance: -2)).to eq 0
+    expect(SimonSays::find_pos('ABCAD', search: 'A', instance: -1)).to eq 3
+    expect(SimonSays::find_pos('ABCAD', search: 'C', instance: -1)).to eq 2
+    expect(SimonSays::find_pos('DDDDD', search: 'D', instance: -1)).to eq 4
+    expect(SimonSays::find_pos('DDDDD', search: 'D', instance: -2)).to eq 3
+    expect(SimonSays::find_pos('DDDDD', search: 'D', instance: -3)).to eq 2
+    expect(SimonSays::find_pos('DDDDD', search: 'D', instance: -4)).to eq 1
+    expect(SimonSays::find_pos('DDDDD', search: 'D', instance: -5)).to eq 0
+  end
+
+  it 'finds the nth vowel' do
+    expect(SimonSays::find_pos('ABCDEFGHI', search: SimonSays::VOWEL, instance: 1)).to eq 0
+    expect(SimonSays::find_pos('ABCDEFGHI', search: SimonSays::VOWEL, instance: 2)).to eq 4
+    expect(SimonSays::find_pos('ABCDEFGHI', search: SimonSays::VOWEL, instance: 3)).to eq 8
+    expect(SimonSays::find_pos('ABCDEFGHI', search: SimonSays::VOWEL, instance: -1)).to eq 8
+    expect(SimonSays::find_pos('ABCDEFGHI', search: SimonSays::VOWEL, instance: -2)).to eq 4
+    expect(SimonSays::find_pos('ABCDEFGHI', search: SimonSays::VOWEL, instance: -3)).to eq 0
+  end
+
+  it 'finds the nth consonant' do
+    expect(SimonSays::find_pos('ABCD', search: SimonSays::CONS, instance: 1)).to eq 1
+    expect(SimonSays::find_pos('ABCD', search: SimonSays::CONS, instance: 2)).to eq 2
+    expect(SimonSays::find_pos('ABCD', search: SimonSays::CONS, instance: 3)).to eq 3
+    expect(SimonSays::find_pos('ABCD', search: SimonSays::CONS, instance: -1)).to eq 3
+    expect(SimonSays::find_pos('ABCD', search: SimonSays::CONS, instance: -2)).to eq 2
+    expect(SimonSays::find_pos('ABCD', search: SimonSays::CONS, instance: -3)).to eq 1
   end
 
   it 'changes a letter at a specified position' do
@@ -92,11 +110,21 @@ describe SimonSays do
     s = SimonSays::switch("THEPERFUMEFACTORY", SimonSays::LEFTMOST, -9)
     s = SimonSays::delete(s, SimonSays::rightmost_pos(s))
     s = SimonSays::insert(s, 8, 'O')
-    s = SimonSays::move(s, SimonSays::find_pos(s, 'A'), 1)
-    s = SimonSays::delete(s, SimonSays::find_pos(s, 'E', -2))
+    s = SimonSays::move(s, SimonSays::find_pos(s, search: 'A'), 1)
+    s = SimonSays::delete(s, SimonSays::find_pos(s, search: 'E', instance: -2))
     s = SimonSays::increment(s, SimonSays::rightmost_pos(s))
     s = SimonSays::switch(s, -7, -8)
     s = SimonSays::delete(s, SimonSays::find_latest(s))
+    s = SimonSays::move(s, 
+                        SimonSays::find_pos(s, search: SimonSays::VOWEL, instance: -2), 
+                        SimonSays::find_pos(s, search: 'C'))
+    s = SimonSays::change(s, SimonSays::find_pos(s, search: SimonSays::CONS, instance: 2), 'D')
+    rightmost_vowel = SimonSays::find_pos(s, search: SimonSays::VOWEL, instance: -1)
+    s = SimonSays::move(s, rightmost_vowel, rightmost_vowel-7)
+    s = SimonSays::insert(s, 4, 'A')
+    s = SimonSays::delete(s, SimonSays::find_pos(s, search: SimonSays::CONS, instance: 5))
+    s = SimonSays::increment(s, SimonSays::find_pos(s, search: SimonSays::CONS, instance: 4))
+    s = SimonSays::insert(s, SimonSays::find_pos(s, search: SimonSays::VOWEL, instance: -1)+1, 'N')
     puts "\n" + s
   end
 end
