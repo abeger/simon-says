@@ -14,9 +14,16 @@ module SimonSays
 
   # like String::partition, but by index
   def self.index_partition(str, index)
-    a = str[0, index] || ''
-    b = str[index] || ''
-    c = str[index+1, str.size-index] || ''
+    #TODO: Needs to handle negative numbers?
+    if index >= 0
+      a = str[0, index] || ''
+      b = str[index] || ''
+      c = str[index+1, str.size-index] || ''
+    else 
+      a = str[0, str.size+index] || ''
+      b = str[index] || ''
+      c = str[str.size+index+1, -index] || ''
+    end
     [a, b, c]
   end
 
@@ -98,6 +105,10 @@ module SimonSays
       end
     end
     return_pos
+  end
+
+  def self.find_two_consec_vowels(str)
+    str.index(/[AEIOU]{2}/)
   end
   
 end

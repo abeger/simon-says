@@ -45,6 +45,10 @@ describe SimonSays do
     expect(SimonSays::move('ABCD', 0, 1)).to eq 'BACD'
     expect(SimonSays::move('ABCD', 2, 3)).to eq 'ABDC'
   end
+
+  it 'moves with negative positions' do
+    expect(SimonSays::move('ABCD', -4, -1)).to eq 'BCAD'
+  end
   
   it 'finds the nth position of a letter from the left' do
     expect(SimonSays::find_pos('ABCAD', search: 'A', instance: 2)).to eq 3
@@ -106,6 +110,13 @@ describe SimonSays do
     expect(SimonSays::find_latest('ABDCD')).to eq 2
   end
 
+  it 'finds the first instance of two consecutive vowels' do
+    expect(SimonSays::find_two_consec_vowels('AEBCD')).to eq 0
+    expect(SimonSays::find_two_consec_vowels('ABIECD')).to eq 2
+    expect(SimonSays::find_two_consec_vowels('ABICDUU')).to eq 5
+    expect(SimonSays::find_two_consec_vowels('ABICDUU')).to eq 5
+  end
+
   it "does the puzzle" do
     s = SimonSays::switch("THEPERFUMEFACTORY", SimonSays::LEFTMOST, -9)
     s = SimonSays::delete(s, SimonSays::rightmost_pos(s))
@@ -125,6 +136,10 @@ describe SimonSays do
     s = SimonSays::delete(s, SimonSays::find_pos(s, search: SimonSays::CONS, instance: 5))
     s = SimonSays::increment(s, SimonSays::find_pos(s, search: SimonSays::CONS, instance: 4))
     s = SimonSays::insert(s, SimonSays::find_pos(s, search: SimonSays::VOWEL, instance: -1)+1, 'N')
+    s = SimonSays::delete(s, 
+                          SimonSays::find_two_consec_vowels(s)+2)
+    s = SimonSays::move(s, SimonSays::find_pos(s, search: SimonSays::CONS, instance: 3), -5)
+    s = SimonSays::insert(s, 5, 'L')
     puts "\n" + s
   end
 end
