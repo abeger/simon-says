@@ -10,17 +10,19 @@ module SimonSays
     str
   end
 
+  # like String::partition, but by index
+  def self.index_partition(str, index)
+    a = str[0, index] || ''
+    b = str[index] || ''
+    c = str[index+1, str.size-index] || ''
+    [a, b, c]
+  end
+
   # Remove letter at pos
   def self.delete(str, pos) 
     #TODO: Handle position outside range?
-    s = ''
-    if pos > 0
-      s = str.slice(0..(pos-1))
-    end
-    if pos < (str.size - 1)
-      s = s.concat(str.slice(pos+1..str.size-1))
-    end
-    s
+    arr = self.index_partition(str, pos)
+    arr[0] + arr[2]
   end
 
   # Return the index of the rightmost character
@@ -31,15 +33,8 @@ module SimonSays
 
   # Insert letter at specified position
   def self.insert(str, pos, letter)
-    s = ''
-    if pos > 0
-      s = str.slice(0..(pos-1))
-    end
-    s = s.concat(letter)
-    if pos < str.size
-      s = s.concat(str.slice(pos..str.size-1))
-    end
-    s
+    arr = self.index_partition(str, pos)
+    arr[0] + letter + arr[1] + arr[2]
   end
 
   # Find first occurance of a letter
