@@ -140,6 +140,6 @@ describe SimonSays do
                           SimonSays::find_two_consec_vowels(s)+2)
     s = SimonSays::move(s, SimonSays::find_pos(s, search: SimonSays::CONS, instance: 3), -5)
     s = SimonSays::insert(s, 5, 'L')
-    puts "\n" + s
+    expect(s).to eq 'MADEALOTOFSCENTS'
   end
 end
