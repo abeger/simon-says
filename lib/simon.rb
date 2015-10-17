@@ -73,5 +73,18 @@ module SimonSays
     str[pos] = str[pos].next
     str
   end
+
+  # Find the first instance of the latest letter in the alphabet in the string
+  def self.find_latest(str) 
+    biggest_ord = 0
+    return_pos = 0
+    str.each_char.with_index do |c, pos|
+      if c.ord > biggest_ord
+        biggest_ord = c.ord 
+        return_pos = pos
+      end
+    end
+    return_pos
+  end
   
 end

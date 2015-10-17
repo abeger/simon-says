@@ -82,6 +82,12 @@ describe SimonSays do
     expect(SimonSays::increment('ABCD', 3)).to eq 'ABCE'
   end
 
+  it 'finds the position of the latest letter in the alphabet' do
+    expect(SimonSays::find_latest('ABCD')).to eq 3
+    expect(SimonSays::find_latest('AFBCD')).to eq 1
+    expect(SimonSays::find_latest('ABDCD')).to eq 2
+  end
+
   it "does the puzzle" do
     s = SimonSays::switch("THEPERFUMEFACTORY", SimonSays::LEFTMOST, -9)
     s = SimonSays::delete(s, SimonSays::rightmost_pos(s))
@@ -90,6 +96,7 @@ describe SimonSays do
     s = SimonSays::delete(s, SimonSays::find_pos(s, 'E', -2))
     s = SimonSays::increment(s, SimonSays::rightmost_pos(s))
     s = SimonSays::switch(s, -7, -8)
+    s = SimonSays::delete(s, SimonSays::find_latest(s))
     puts "\n" + s
   end
 end
