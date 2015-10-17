@@ -89,6 +89,7 @@ describe SimonSays do
     s = SimonSays::move(s, SimonSays::find_pos(s, 'A'), 1)
     s = SimonSays::delete(s, SimonSays::find_pos(s, 'E', -2))
     s = SimonSays::increment(s, SimonSays::rightmost_pos(s))
+    s = SimonSays::switch(s, -7, -8)
     puts "\n" + s
   end
 end
